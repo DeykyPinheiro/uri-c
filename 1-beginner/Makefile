@@ -1,24 +1,33 @@
+NAME = beginner
+
 SRC_LAST = $(shell sh -c "find . -type f -name '*.c' | sort | tail -n1 | cut -c3-")
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 LINKS = -lm
 
-OBJ = $(addprefix $(),$(SRC_LAST:%.c=%.o))
+RM = rm -rf
 
-all: $(OBJ)
-	$(CC) $(CFLAGS) $(SRC_LAST) $(LINKS) -o $(OBJ)
+OBJ = $(SRC_LAST:.c=.o)
+
+all: $(NAME)
+
+
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $(SRC_LAST) $(LINKS) -o $(NAME)
+
+$(OBJ): $(SRC_LAST)
+	$(CC) $(CFLAGS) $(SRC_LAST) -o $@
 
 clean:
-	rm -rf *.out
-	rm -rf *.o
+	$(RM) $(OBJ)
 
 fclean: clean
-
+	$(RM) $(NAME)
 r:
-	./$(OBJ)
+	./$(NAME)
 
 v:
-	valgrind --leak-check=full ./$(OBJ)
+	valgrind --leak-check=full ./$(NAME)
 
 .PHONY: all clean fclean r v
