@@ -24,7 +24,8 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
-r:
+
+r:	all
 	./$(NAME)
 
 v:
