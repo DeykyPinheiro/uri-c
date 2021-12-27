@@ -21,9 +21,13 @@ $(OBJ): $(SRC_LAST)
 
 clean:
 	$(RM) $(OBJ)
+	$(RM) *.o
 
 fclean: clean
 	$(RM) $(NAME)
+
+n:
+	norminette $(SRC_LAST)
 
 r:	all
 	./$(NAME)
@@ -31,4 +35,4 @@ r:	all
 v:
 	valgrind --leak-check=full ./$(NAME)
 
-.PHONY: all clean fclean r v
+.PHONY: all clean fclean r v n
